@@ -1,3 +1,13 @@
+buildscript {
+  repositories {
+        google()  // Necesario para resolver com.google.gms:google-services
+        mavenCentral()  // Opcional, pero recomendable para otras dependencias
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'  // Verifica la versión del plugin de Gradle
+        classpath 'com.google.gms:google-services:4.3.15'  // Verifica la versión del plugin de Google Services
+    }
+}
 allprojects {
     repositories {
         google()
@@ -12,12 +22,7 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
-buildscript {
-  dependencies {
-    // ... other dependencies
-    classpath 'com.google.gms:google-services:4.3.15'
-  }
-}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
