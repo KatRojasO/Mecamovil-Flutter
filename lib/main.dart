@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'web/web_main.dart';
-import 'mobile/mobile_main.dart';
+import 'views/web/web_main.dart';
+import 'views/mobile/mobile_main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
