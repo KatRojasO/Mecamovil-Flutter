@@ -8,12 +8,19 @@ class WebApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
+      title: 'Mecamovil',
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'login',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      debugShowCheckedModeBanner: false,  // Esto elimina la cinta "Debug"
-      home: LoginScreen(),
+      routes: {
+        'login':(context)=>LoginScreen(),
+        //'home': (context) => HomeScreen(),
+       // 'servicios': (context) => ServiciosScreen(),
+        //'historial': (context) => HistorialScreen(),
+        //'vehiculos': (context) => VehiculosScreen(),
+      },
     );
   }
 }

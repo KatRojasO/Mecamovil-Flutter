@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../widgets/input_decoration.dart'; // Importa tu archivo de InputDecorations
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -56,25 +56,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 24),
+                  // Aplicando InputDecoration personalizado para el correo electrónico
                   TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Correo Electrónico',
-                      labelStyle: TextStyle(color: Color(0xFF2A197F)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                    decoration: InputDecorations.inputDecoration(
+                      hintext: 'Ingrese su correo electrónico',
+                      labeltext: 'Correo Electrónico',
+                      icon: Icon(Icons.email_outlined, color: Colors.deepPurple),
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: 16),
+                  // Aplicando InputDecoration personalizado para la contraseña
                   TextField(
                     obscureText: _obscureText,
-                    decoration: InputDecoration(
-                      labelText: 'Contraseña',
-                      labelStyle: TextStyle(color: Color(0xFF2A197F)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                    decoration: InputDecorations.inputDecoration(
+                      hintext: 'Ingrese su contraseña',
+                      labeltext: 'Contraseña',
+                      icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
+                    ).copyWith(
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText ? Icons.visibility_off : Icons.visibility,
@@ -89,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Acción para el botón de iniciar sesión
                         
+                        // Acción para el botón de iniciar sesión
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 16),
@@ -99,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      
                       child: Text(
                         'Iniciar Sesión',
                         style: TextStyle(
@@ -107,7 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 18,
                         ),
                       ),
-                      
                     ),
                   ),
                   SizedBox(height: 16),
