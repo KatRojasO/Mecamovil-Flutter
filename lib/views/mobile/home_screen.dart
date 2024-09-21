@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../models/usuario_model.dart';
-import '../../controllers/login_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../../controllers/usuario_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -66,14 +65,15 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: Colors.purple,
               ),
-              child: Text(
-                'Opciones',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+              child: Center(
+                child: Image.asset(
+                  'assets/logo_navbar.png',
+                  fit: BoxFit
+                      .cover, // Ajusta la imagen para cubrir todo el espacio del DrawerHeader
                 ),
               ),
             ),
+
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
