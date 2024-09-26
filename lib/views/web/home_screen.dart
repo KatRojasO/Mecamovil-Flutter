@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'clientes_page.dart';
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
-class HomeScreen extends StatelessWidget {
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0; // Índice de la página seleccionada
+
+  // Definimos las páginas para cada ítem del BottomNavigationBar
+  final List<Widget> _pages = [
+    HomePage(), // Pantalla de inicio
+    ClientesPage(), // Pantalla de clientes
+    MecanicosPage(), // Pantalla de mecánicos
+    ServiciosPage(), // Pantalla de servicios
+    ReportesPage(), // Pantalla de reportes
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Esto elimina el botón de retroceso
+        automaticallyImplyLeading: false, // Elimina el botón de retroceso
         backgroundColor: Colors.purple,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -14,184 +30,93 @@ class HomeScreen extends StatelessWidget {
             SizedBox(width: 20),
             Text(
               'Mecamovil',
-              style: TextStyle(color: Colors.white), // Texto blanco
+              style: TextStyle(color: Colors.white),
             ),
           ],
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            iconSize: 50, // Aumentar el tamaño del ícono de sesión
+            iconSize: 50, // Aumentar el tamaño del ícono de perfil
             icon: Icon(Icons.account_circle, color: Colors.white),
             onPressed: () {
               // Acción para perfil
             },
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'home');
-                },
-                icon: Icon(Icons.home, color: Colors.white),
-                label: Text(
-                  'Inicio',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(width: 20),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/clientes');
-                },
-                icon: Icon(Icons.people, color: Colors.white),
-                label: Text(
-                  'Clientes',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(width: 20),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/mecanicos');
-                },
-                icon: Icon(Icons.build, color: Colors.white),
-                label: Text(
-                  'Mecánicos',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(width: 20),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/servicios');
-                },
-                icon: Icon(Icons.miscellaneous_services, color: Colors.white),
-                label: Text(
-                  'Servicios',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(width: 20),
-              TextButton.icon(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/reportes');
-                },
-                icon: Icon(Icons.report, color: Colors.white),
-                label: Text(
-                  'Reportes',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Inicio', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildCard(context, "Compras del mes", "\$12.500,00", Icons.shopping_bag, Colors.blue),
-                _buildCard(context, "Compras del año", "\$12.500,00", Icons.show_chart, Colors.black),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildCard(context, "Ventas del mes", "\$12.500,00", Icons.shopping_cart, Colors.teal),
-                _buildCard(context, "Ventas del año", "\$12.500,00", Icons.line_style, Colors.green),
-              ],
-            ),
-            SizedBox(height: 24),
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Compras y ventas mensuales', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            Expanded(
-                              child: Container(
-                                color: Colors.grey[200],
-                                // Aquí irá el gráfico
-                                child: Center(child: Text('Gráfico 1')),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Compras y ventas anuales', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            Expanded(
-                              child: Container(
-                                color: Colors.grey[200],
-                                // Aquí irá el gráfico
-                                child: Center(child: Text('Gráfico 2')),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      body: _pages[_currentIndex], // Renderiza la página según el índice actual
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex, // Índice de la página actual
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index; // Cambia el índice cuando se selecciona un ítem
+          });
+        },
+        selectedItemColor: Colors.purple, // Color para el ítem seleccionado
+        unselectedItemColor: Colors.grey, // Color para los ítems no seleccionados
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Clientes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.build),
+            label: 'Mecánicos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.miscellaneous_services),
+            label: 'Servicios',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.report),
+            label: 'Reportes',
+          ),
+        ],
       ),
     );
   }
+}
 
-  Widget _buildCard(BuildContext context, String title, String amount, IconData icon, Color color) {
-    return Expanded(
-      child: Card(
-        color: color,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    amount,
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-              Icon(icon, color: Colors.white, size: 50),
-            ],
-          ),
-        ),
-      ),
+// Páginas de ejemplo para cada ítem del BottomNavigationBar
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Página de Inicio'),
+    );
+  }
+}
+
+
+
+class MecanicosPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Página de Mecánicos'),
+    );
+  }
+}
+
+class ServiciosPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Página de Servicios'),
+    );
+  }
+}
+
+class ReportesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Página de Reportes'),
     );
   }
 }

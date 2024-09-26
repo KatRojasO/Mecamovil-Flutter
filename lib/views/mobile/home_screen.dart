@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../models/usuario_model.dart';
 import '../../controllers/usuario_controller.dart';
+import 'editar_usuario.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -149,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 80,
+                    radius: 100,
                     backgroundImage: NetworkImage(
                         usuario!.url_foto ?? "https://via.placeholder.com/150"),
                   ),
@@ -200,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 40),
                             Expanded(
                               child: Text(
-                                '${usuario!.nombre}',
+                                '${usuario!.nombre}'+' '+'${usuario!.apellido}',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal, // Sin negrita
@@ -210,36 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Apellido:',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: 40),
-                            Expanded(
-                              child: Text(
-                                '${usuario!.apellido ?? ''}',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal, // Sin negrita
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+
                         SizedBox(height: 10),
                         Row(
                           children: [
@@ -287,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Row(
                           children: [
-                            SizedBox(width: 10),
+                            SizedBox(width: 40),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,22 +283,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () {
-                      // Navegar a la pantalla de edición
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple, // Color del botón
-                      foregroundColor:
-                          Colors.white, // Color del texto del botón
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                      textStyle: TextStyle(fontSize: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text('Editar datos'),
-                  ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditarUsuarioScreen(usuario: usuario!), 
+      ),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.purple, // Color del botón
+    foregroundColor: Colors.white,  // Color del texto del botón
+    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+    textStyle: TextStyle(fontSize: 18),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+  ),
+  child: Text('Editar datos'),
+),
+
                 ],
               ),
             ),

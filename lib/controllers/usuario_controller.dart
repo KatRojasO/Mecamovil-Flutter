@@ -49,7 +49,7 @@ Future<User?> signInWithGoogle() async {
       url,
       body: {
         'email': user.email!,
-        'nombre': user.displayName?.split(' ')[0] ?? '',
+        'nombre': user.displayName ?? '',
         //'apellido': user.displayName?.split(' ')[1] ?? '',
         'url_foto': user.photoURL?? '',
         'telefono': user.phoneNumber?? '',
@@ -70,3 +70,31 @@ Future<User?> signInWithGoogle() async {
       print('Error al comunicarse con el servidor.');
     }
   }
+Future<bool> actualizarUsuario(Usuario usuario) async {
+  final url = Uri.parse('https://mecamovil.nexxosrl.site/api/actualizar_usuario.php'); // URL para actualizar
+
+  final response = await http.post(
+    url,
+    body: {
+      'email': usuario.email, 
+      'nombre': usuario.nombre,
+      'apellido': usuario.apellido??'',
+      'telefono': usuario.telefono ?? '',
+      'url_foto': usuario.url_foto ?? '',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    if (data['success']) {
+      print('Usuario actualizado correctamente');
+      return true;  
+    } else {
+      print('Error al actualizar el usuario: ${data['message']}');
+      return false;  
+    }
+  } else {
+    print('Error al comunicarse con el servidor.');
+    return false;
+  }
+}

@@ -1,33 +1,33 @@
 class Usuario {
-  int _id;
+  int? _id;
   String? _contrasenia;
   String _nombre;
   String? _apellido;
   String _email;
   String? _url_foto;
   String? _telefono;
-  String _fecha_registro;
-  String _ultimo_inicio_sesion;
+  String? _fecha_registro;
+  String? _ultimo_inicio_sesion;
   String? _ubicacionActual; // Solo para mecánicos
-  String _tipoUsuario; // 'cliente', 'mecánico', 'administrador'
-  bool _estado;
+  String? _tipoUsuario; // 'cliente', 'mecánico', 'administrador'
+  bool? _estado;
   String? _habilidades; // 'auto', 'moto', 'ambos'
   bool? _disponibilidad; // Solo para mecánicos
 
   // Constructor
   Usuario({
-    required int id,
+    int? id,
     String? contrasenia,
     required String nombre,
     String? apellido,
     required String email,
     String? url_foto,
     String? telefono,
-    required String fecha_registro,
-    required String ultimo_inicio_sesion,
+    String? fecha_registro,
+    String? ultimo_inicio_sesion,
     String? ubicacionActual,
-    required String tipoUsuario,
-    required bool estado,
+    String? tipoUsuario,
+    bool? estado,
     String? habilidades,
     bool? disponibilidad,
   })  : _id = id,
@@ -46,18 +46,18 @@ class Usuario {
         _disponibilidad = disponibilidad;
 
   // Getters
-  int get id => _id;
+  int? get id => _id;
   String? get contrasenia => _contrasenia;
   String get nombre => _nombre;
   String? get apellido => _apellido;
   String get email => _email;
   String? get url_foto => _url_foto;
   String? get telefono => _telefono;
-  String get fecha_registro => _fecha_registro;
-  String get ultimo_inicio_sesion => _ultimo_inicio_sesion;
+  String? get fecha_registro => _fecha_registro;
+  String? get ultimo_inicio_sesion => _ultimo_inicio_sesion;
   String? get ubicacionActual => _ubicacionActual;
-  String get tipoUsuario => _tipoUsuario;
-  bool get estado => _estado;
+  String? get tipoUsuario => _tipoUsuario;
+  bool? get estado => _estado;
   String? get habilidades => _habilidades;
   bool? get disponibilidad => _disponibilidad;
 
@@ -68,11 +68,11 @@ class Usuario {
   set email(String value) => _email = value;
   set url_foto(String? value) => _url_foto = value;
   set telefono(String? value) => _telefono = value;
-  set fecha_registro(String value) => _fecha_registro = value;
-  set ultimo_inicio_sesion(String value) => _ultimo_inicio_sesion = value;
+  set fecha_registro(String? value) => _fecha_registro = value;
+  set ultimo_inicio_sesion(String? value) => _ultimo_inicio_sesion = value;
   set ubicacionActual(String? value) => _ubicacionActual = value;
-  set tipoUsuario(String value) => _tipoUsuario = value;
-  set estado(bool value) => _estado = value;
+  set tipoUsuario(String? value) => _tipoUsuario = value;
+  set estado(bool? value) => _estado = value;
   set habilidades(String? value) => _habilidades = value;
   set disponibilidad(bool? value) => _disponibilidad = value;
 // Método para convertir de JSON a una instancia de Usuario
