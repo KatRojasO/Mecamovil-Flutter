@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';  // Asegúrate de que esta ruta sea correcta
 import 'home_screen.dart';
+import 'vehiculos_screen.dart';
 void main() {
   runApp(MobileApp());
 }
@@ -15,6 +16,7 @@ class MobileApp extends StatelessWidget {
       routes: {
         'login':(context)=>LoginScreen(),
         'home': (context) => HomeScreen(),
+        'vehiculos': (context) => VehiculosScreen(),
        // 'servicios': (context) => ServiciosScreen(),
         //'historial': (context) => HistorialScreen(),
         //'vehiculos': (context) => VehiculosScreen(),

@@ -103,9 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 30,
                 height: 30,
               ),
-              title: Text('Vehículos'),
+              title: Text('Vehiculos'),
               onTap: () {
-                // Navegar a la pantalla de Vehículos
+                Navigator.pushNamed(
+                    context, 'vehiculos');
               },
             ),
             ListTile(

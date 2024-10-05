@@ -245,10 +245,10 @@ class _ClientesPageState extends State<ClientesPage> {
   }
 
   void _editarUsuario(BuildContext context, dynamic usuario) {
-    // Navegar a pantalla de edición
+    // editar
   }
 
   void _eliminarUsuario(BuildContext context, dynamic usuario) {
-    // Lógica para eliminar usuario
+    // eliminar
   }
 }

@@ -5,6 +5,7 @@ import '../../models/usuario_model.dart';
 import '../../controllers/usuario_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class EditarUsuarioScreen extends StatefulWidget {
   final Usuario usuario;
 

@@ -8,7 +8,7 @@ class Usuario {
   String? _telefono;
   String? _fecha_registro;
   String? _ultimo_inicio_sesion;
-  String? _ubicacionActual; // Solo para mecánicos
+  String? _ubicacionActual; 
   String? _tipoUsuario; // 'cliente', 'mecánico', 'administrador'
   bool? _estado;
   String? _habilidades; // 'auto', 'moto', 'ambos'
@@ -61,7 +61,6 @@ class Usuario {
   String? get habilidades => _habilidades;
   bool? get disponibilidad => _disponibilidad;
 
-  // Setters
   set contrasenia(String? value) => _contrasenia = value;
   set nombre(String value) => _nombre = value;
   set apellido(String? value) => _apellido = value;
