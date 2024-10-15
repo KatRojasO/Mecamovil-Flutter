@@ -12,6 +12,7 @@ class _ClientesPageState extends State<ClientesPage> {
   List<dynamic> usuariosFiltrados = [];
   bool isLoading = true;
   final TextEditingController _buscadorController = TextEditingController();
+  int _rowsPerPage = 5;
 
   @override
   void initState() {
@@ -29,8 +30,7 @@ class _ClientesPageState extends State<ClientesPage> {
       if (response.statusCode == 200) {
         setState(() {
           usuarios = json.decode(response.body);
-          usuariosFiltrados =
-              usuarios; // Inicialmente mostramos todos los usuarios
+          usuariosFiltrados = usuarios;
           isLoading = false;
         });
       } else {
@@ -59,196 +59,233 @@ class _ClientesPageState extends State<ClientesPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Lista de Clientes',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 50),
-            // Buscador
-            SizedBox(
-              width: 400, // Ajusta el ancho a lo que prefieras
-              child: TextField(
-                controller: _buscadorController,
-                decoration: InputDecoration(
-                  labelText: 'Buscar',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search),
-                ),
-                onChanged: _buscarUsuarios, // Se busca directamente al escribir
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Lista de Clientes',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 50),
+          SizedBox(
+            width: 400,
+            child: TextField(
+              controller: _buscadorController,
+              decoration: InputDecoration(
+                labelText: 'Buscar',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.search),
               ),
+              onChanged: _buscarUsuarios,
             ),
-
-            SizedBox(height: 16),
-            isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: SingleChildScrollView(
-                      child: DataTable(
+          ),
+          SizedBox(height: 16),
+          isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Expanded(  // Cambiamos por Expanded para manejar el tamaño dinámico
+                  child: SingleChildScrollView(
+                
+                    
+                      child: PaginatedDataTable(
                         columns: [
                           DataColumn(
-                            label: Center(
-                              child: Text(
-                                'Nombre',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.purple, // Color del encabezado
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Center(
-                              child: Text(
-                                'Email',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.purple, // Color del encabezado
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Center(
-                              child: Text(
-                                'Teléfono',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.purple, // Color del encabezado
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Center(
-                              child: Text(
-                                'Estado',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.purple, // Color del encabezado
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Center(
-                              child: Text(
-                                'Acciones',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.purple, // Color del encabezado
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                          //DataColumn(label: Text('Teléfono', textAlign: TextAlign.center)),
-                          //DataColumn(label: Text('Acciones', textAlign: TextAlign.center)),
-                        ],
-                        rows: usuariosFiltrados.map((usuario) {
-                          return DataRow(cells: [
-                            DataCell(Text(
-                              '${usuario['nombre'] ?? ''} ${usuario['apellido'] ?? ''}', // Concatenación de nombre y apellido
-                              textAlign: TextAlign.center,
+                            label: Text(
+                              'N°',
                               style: TextStyle(
-                                  fontWeight:
-                                      FontWeight.bold), // Estilo opcional
-                            )),
-                            DataCell(Text(usuario['email'] ?? '',
-                                textAlign: TextAlign.center)),
-                            DataCell(Text(usuario['telefono'] ?? '',
-                                textAlign: TextAlign.center)),
-                            DataCell(
-                              Text(
-                                usuario['estado'] == '1'
-                                    ? 'Habilitado'
-                                    : 'Deshabilitado', // Condicional para estado
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: usuario['estado'] == '1'
-                                      ? Colors.green
-                                      : Colors.red, // Color según el estado
-                                ),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
                               ),
                             ),
-                            DataCell(Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.visibility,
-                                      color: Colors.blue),
-                                  onPressed: () {
-                                    _verUsuario(context, usuario);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.edit, color: Colors.green),
-                                  onPressed: () {
-                                    _editarUsuario(context, usuario);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.red),
-                                  onPressed: () {
-                                    _eliminarUsuario(context, usuario);
-                                  },
-                                ),
-                              ],
-                            )),
-                          ]);
-                        }).toList(),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Nombre',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Email',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Teléfono',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Estado',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Acciones',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.purple,
+                              ),
+                            ),
+                          ),
+                        ],
+                        source: UsuarioDataSource(
+                          usuariosFiltrados, context, actualizarEstado, () {
+                            setState(() {});
+                          }
+                        ),
+                        rowsPerPage: _rowsPerPage,
+                        columnSpacing: 10,
                       ),
                     ),
                   ),
-          ],
-        ),
+                
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
-  void _verUsuario(BuildContext context, dynamic usuario) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Detalles del Cliente'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Nombre: ${usuario['nombre']}'),
-              Text('Email: ${usuario['email']}'),
-              Text('Teléfono: ${usuario['telefono']}'),
-            ],
+  Future<bool> actualizarEstado(int id, int nuevoEstado) async {
+    final url =
+        Uri.parse('https://mecamovil.nexxosrl.site/api/actualizar_estado.php');
+
+    final response = await http.post(
+      url,
+      body: {
+        'id': id.toString(),
+        'nuevo_estado': nuevoEstado.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var respuesta = json.decode(response.body);
+      return respuesta['success'] == true;
+    } else {
+      return false;
+    }
+  }
+}
+
+class UsuarioDataSource extends DataTableSource {
+  final List<dynamic> usuarios;
+  final BuildContext context;
+  final Future<bool> Function(int id, int nuevoEstado) actualizarEstado;
+  final VoidCallback onActualizarEstado; // para llamar a setState
+
+  UsuarioDataSource(
+    this.usuarios,
+    this.context,
+    this.actualizarEstado,
+    this.onActualizarEstado,
+  );
+
+  @override
+  DataRow getRow(int index) {
+    final usuario = usuarios[index];
+
+    return DataRow(cells: [
+      DataCell(Container(
+        width: 50,
+        child: Text('${index + 1}'),
+      )),
+      DataCell(Container(
+        width: 400, // Ancho 
+        child: Text(
+          '${usuario['nombre'] ?? ''} ${usuario['apellido'] ?? ''}'.toUpperCase(), 
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      )),
+      DataCell(Container(
+        width: 300, // Ancho
+        child: Text(usuario['email'] ?? ''),
+      )),
+      DataCell(Container(
+        width: 150, // Ancho
+        child: Text(usuario['telefono'] ?? ''),
+      )),
+      DataCell(
+        Container(
+          width: 150,
+          child: TextButton(
+          onPressed: () async {
+            int estadoActual = int.parse(usuario['estado']);
+            if (estadoActual == 1) {
+              estadoActual = 0;
+            } else {
+              estadoActual = 1;
+            }
+
+            bool actualizado =
+                await actualizarEstado(int.parse(usuario['id']), estadoActual);
+            if (actualizado) {
+              usuario['estado'] = estadoActual.toString();
+              onActualizarEstado(); // Llama al callback
+            }
+          },
+          style: TextButton.styleFrom(
+            backgroundColor:
+                usuario['estado'] == '1' ? Colors.green : Colors.red,
           ),
-          actions: [
-            TextButton(
-              child: Text('Cerrar'),
+          child: Text(
+            usuario['estado'] == '1' ? 'Habilitado' : 'Deshabilitado',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        )
+      ),
+      DataCell(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(Icons.visibility, color: Colors.blue),
               onPressed: () {
-                Navigator.of(context).pop();
+                // Implementar la acción de ver detalles
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.edit, color: Colors.green),
+              onPressed: () {
+                // Implementar la acción de editar
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.delete, color: Colors.red),
+              onPressed: () {
+                // Implementar la acción de eliminar
               },
             ),
           ],
-        );
-      },
-    );
+        ),
+      ),
+    ]);
   }
 
-  void _editarUsuario(BuildContext context, dynamic usuario) {
-    // editar
-  }
+  @override
+  bool get isRowCountApproximate => false;
 
-  void _eliminarUsuario(BuildContext context, dynamic usuario) {
-    // eliminar
-  }
+  @override
+  int get rowCount => usuarios.length;
+
+  @override
+  int get selectedRowCount => 0;
 }

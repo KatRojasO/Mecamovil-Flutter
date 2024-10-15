@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'clientes_page.dart';
+import 'servicios_page.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -102,7 +103,7 @@ class MecanicosPage extends StatelessWidget {
     );
   }
 }
-
+/*
 class ServiciosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,7 @@ class ServiciosPage extends StatelessWidget {
     );
   }
 }
-
+*/
 class ReportesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
