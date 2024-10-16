@@ -42,7 +42,10 @@ dependencies:
   google_sign_in: ^6.1.5
   firebase_auth: ^4.16.0
   firebase_storage: ^11.0.16
-  http: ^0.13.3
+  http: ^1.2.2
+  #Dependencias necesarias para el mapa
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
   
 dev_dependencies:
   flutter_test:
@@ -68,6 +71,7 @@ flutter:
   assets:
       - assets/logo_vehiculos.png
       - assets/logo_navbar.png
+      - assets/not_found.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

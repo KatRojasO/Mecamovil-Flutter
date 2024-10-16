@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mecamovil/views/mobile/layouts/menu.dart';
 import '../../models/usuario_model.dart';
 import '../../controllers/usuario_controller.dart';
 import 'editar_usuario.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             SizedBox(width: 65),
             Expanded(
@@ -51,98 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         backgroundColor: Colors.purple,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, // Color blanco
           size: 30, // Tamaño del icono más grande
         ),
         automaticallyImplyLeading: true,
       ),
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.7,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.purple,
-              ),
-              child: Center(
-                child: Image.asset(
-                  'assets/logo_navbar.png',
-                  fit: BoxFit
-                      .cover, // Ajusta la imagen para cubrir todo el espacio del DrawerHeader
-                ),
-              ),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pushNamed(
-                    context, 'home'); // Navega a la pantalla de Servicios
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.build),
-              title: Text('Servicios'),
-              onTap: () {
-                // Navegar a la pantalla de Servicios
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.history),
-              title: Text('Historial'),
-              onTap: () {
-                // Navegar a la pantalla de Historial
-              },
-            ),
-            ListTile(
-              leading: Image.asset(
-                'assets/logo_vehiculos.png', // Ícono personalizado para Vehículos
-                width: 30,
-                height: 30,
-              ),
-              title: Text('Vehiculos'),
-              onTap: () {
-                Navigator.pushNamed(
-                    context, 'vehiculos');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuración'),
-              onTap: () {
-                // Navegar a la pantalla de Configuración
-              },
-            ),
-            SizedBox(height: 200), // Espacio antes del botón
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Acción al presionar "Modo Mecánico"
-                  print("Modo Mecánico activado");
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.purple, // Color del botón
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Text(
-                  'Modo Mecánico',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: Menu(),
       body: usuario == null
           ? Center(child: CircularProgressIndicator())
           : Padding(
@@ -158,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 20),
                   Text(
                     '¡Bienvenid@, ${usuario!.nombre}!',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: Colors.purple,
@@ -183,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -267,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text(
                                     '${usuario!.telefono ?? ''}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight:
                                           FontWeight.normal, // Sin negrita

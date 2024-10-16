@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, 'phoneLogin');
+                    Navigator.pushReplacementNamed(context, 'vehiculos');
                   },
                   icon: const Icon(Icons.phone, color: Colors.white),
                   label: const Text(

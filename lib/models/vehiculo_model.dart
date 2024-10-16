@@ -7,6 +7,7 @@ class Vehiculo {
   String _placa; 
   String _tipo;
   String _cilindrada;
+  int _estado_db;
   String? _foto;
   String? _color;
   String? _combustible;
@@ -22,10 +23,12 @@ class Vehiculo {
     required String placa,//6092txt
     required String tipo,//TITANIUM
     required String cilindrada,//200
+    required int estado_db,
     String? color,
     String? combustible,
     String? tipo_motor,
     String? foto,
+
   })  : _id = id,
         _usuario_id = usuario_id,
         _clase_vehiculo = clase_vehiculo,
@@ -34,10 +37,27 @@ class Vehiculo {
         _placa = placa,
         _tipo = tipo,
         _cilindrada=cilindrada,
+        _estado_db=estado_db,
         _color=color,
         _combustible=combustible,
         _tipo_motor=tipo_motor,
         _foto=foto;
+
+  // Constructor 2
+  Vehiculo.vacio({int usuario_id = 0})  : 
+        _id = 0,
+        _usuario_id = usuario_id,
+        _clase_vehiculo = "moto",
+        _marca = "",
+        _modelo = "",
+        _placa = "",
+        _tipo = "",
+        _cilindrada = "",
+        _estado_db = 1,
+        _color = "",
+        _combustible = "",
+        _tipo_motor = "",
+        _foto = "";
 
   // Método para convertir de un Map a un objeto Vehiculo
   factory Vehiculo.fromMap(Map<String, dynamic> map) {
@@ -50,6 +70,7 @@ class Vehiculo {
       placa: map['placa'],
       tipo: map['tipo'],
       cilindrada: map['cilindrada'],
+      estado_db: map['estado_db'],
       color: map['color'],
       combustible: map['combustible'],
       tipo_motor: map['tipo_motor'],
@@ -68,6 +89,7 @@ class Vehiculo {
       'placa': _placa,
       'tipo': _tipo,
       'cilindrada': _cilindrada,
+      'estado_db': _estado_db,
       'color':_color,
       'combustible':_combustible,
       'tipo_motor':_tipo_motor,
@@ -112,6 +134,10 @@ class Vehiculo {
   String get cilindrada => _cilindrada;
   set cilindrada(String value) {
     _cilindrada = value;
+  }
+  int get estado_db => _estado_db;
+  set estado_db(int value) {
+    _estado_db = value;
   }
   String? get color => _color;
   set color(String? value) {
