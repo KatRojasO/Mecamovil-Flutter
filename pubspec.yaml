@@ -46,6 +46,8 @@ dependencies:
   #Dependencias necesarias para el mapa
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
+  geolocator: ^9.0.2
+  session_storage: ^0.0.1
   
 dev_dependencies:
   flutter_test:

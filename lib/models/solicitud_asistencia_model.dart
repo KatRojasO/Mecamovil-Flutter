@@ -6,7 +6,7 @@ class Solicitud_Asistencia{
   String _descripcion_problema;
   String _estado;
   DateTime _fecha_solicitud;
-  double _costo_estimado;
+  double _costo;
   String _ubicacion_cliente;
 
   //Constructor
@@ -18,7 +18,7 @@ class Solicitud_Asistencia{
     required descripcion_problema,
     required String estado,
     required DateTime fecha_solicitud,
-    required double costo_estimado,
+    required double costo,
     required String ubicacion_cliente
   }) : _id = id,
        _cliente_id = cliente_id,
@@ -27,7 +27,7 @@ class Solicitud_Asistencia{
        _descripcion_problema = descripcion_problema,
        _estado = estado,
        _fecha_solicitud = fecha_solicitud,
-       _costo_estimado = costo_estimado,
+       _costo = costo,
        _ubicacion_cliente = ubicacion_cliente;
   
   //Constructor 2
@@ -39,19 +39,19 @@ class Solicitud_Asistencia{
     _descripcion_problema = "",
     _estado = "pendiente",
     _fecha_solicitud = DateTime.now(),
-    _costo_estimado = 0.0,
+    _costo = 0.0,
     _ubicacion_cliente = "";
 
   factory Solicitud_Asistencia.fromMap(Map<String, dynamic> map){
     return Solicitud_Asistencia(
-      id: map['id'], 
-      cliente_id: map['cliente_id'], 
-      mecanico_id: map['mecanico_id'], 
-      vehiculo_id: map['vehiculo_id'], 
+      id: int.parse(map['id']), 
+      cliente_id: int.parse(map['cliente_id']), 
+      mecanico_id: int.parse(map['mecanico_id']), 
+      vehiculo_id: int.parse(map['vehiculo_id']), 
       descripcion_problema: map['descripcion_problema'], 
       estado: map['estado'], 
-      fecha_solicitud: map['fecha_solicitud'], 
-      costo_estimado: map['costo_estimado'], 
+      fecha_solicitud: DateTime.parse(map['fecha_solicitud']), 
+      costo: double.parse(map['costo']), 
       ubicacion_cliente: map['ubicacion_cliente']
     );
   }
@@ -91,9 +91,9 @@ class Solicitud_Asistencia{
     _fecha_solicitud = value;
   }
 
-  double get costo_estimado => _costo_estimado;
-  set costo_estimado(double value) {
-    _costo_estimado = value;
+  double get costo => _costo;
+  set costo(double value) {
+    _costo = value;
   }
 
   String get ubicacion_cliente => _ubicacion_cliente;

@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../controllers/usuario_controller.dart';
 
+import 'package:session_storage/session_storage.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -26,6 +28,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   SingleChildScrollView loginForm(BuildContext context) {
+    final session = SessionStorage();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -76,8 +79,12 @@ class LoginScreen extends StatelessWidget {
                     try {
                       final user = await signInWithGoogle();
                       if (user != null) {
-                        await checkAndAddUserToDatabase(user);
-                        Navigator.pushReplacementNamed(context, 'home');
+                        int id = await checkAndAddUserToDatabase(user);
+                        if (id != 0) {
+                          session['userEmail'] = user.email!;
+                          session['userId'] = id.toString();
+                          Navigator.pushReplacementNamed(context, 'home');
+                        }
                       }
                     } on FirebaseAuthException catch (error) {
                       print(error.message);
@@ -110,13 +117,16 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40), // Aumentar espacio vertical entre los botones
                 // Botón para iniciar sesión con número de celular
-                FilledButton.tonalIcon(
+                /*FilledButton.tonalIcon(
                   style: FilledButton.styleFrom(
                     backgroundColor: Colors.purple,
                     minimumSize: const Size(250, 50),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                   ),
                   onPressed: () {
+
+                    session['userEmail'] = 'rojas.lourdes.94435@gmail.com';
+                    session['userId'] = '4';
                     Navigator.pushReplacementNamed(context, 'vehiculos');
                   },
                   icon: const Icon(Icons.phone, color: Colors.white),
@@ -127,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                       fontSize: 17,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

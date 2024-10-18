@@ -38,10 +38,10 @@ Future<User?> signInWithGoogle() async {
     }
   }
 
-  Future<void> checkAndAddUserToDatabase(User? user) async {
+  Future<int> checkAndAddUserToDatabase(User? user) async {
     if (user == null) {
       print('No se pudo obtener la información del usuario.');
-      return;
+      return 0;
     }
 
     final url = Uri.parse('https://mecamovil.nexxosrl.site/api/check_user.php'); 
@@ -66,8 +66,10 @@ Future<User?> signInWithGoogle() async {
       } else {
         print('Usuario agregado a la base de datos.');
       }
+      return int.parse(data['id']);
     } else {
       print('Error al comunicarse con el servidor.');
+      return 0;
     }
   }
 Future<bool> actualizarUsuario(Usuario usuario) async {

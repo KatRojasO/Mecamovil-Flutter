@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mecamovil/models/usuario_model.dart';
+//import 'package:mecamovil/models/usuario_model.dart';
 import 'package:mecamovil/models/vehiculo_model.dart';
-import 'package:mecamovil/controllers/usuario_controller.dart';
+//import 'package:mecamovil/controllers/usuario_controller.dart';
 import 'package:mecamovil/controllers/vehiculo_controller.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Para obtener los datos de Firebase
+//import 'package:firebase_auth/firebase_auth.dart'; // Para obtener los datos de Firebase
 import 'package:mecamovil/views/mobile/layouts/menu.dart';
 import 'form_vehiculo.dart';
+import 'package:session_storage/session_storage.dart';
 
 class VehiculosScreen extends StatefulWidget {
   @override
@@ -16,22 +17,25 @@ class _VehiculosScreenState extends State<VehiculosScreen> {
   List<Vehiculo> vehiculos=[];
   bool isLoading = true;
   String? userEmail;
+  final session = SessionStorage();
 
-  Usuario? usuario;
+  //Usuario? usuario;
 
   @override
   void initState() {
     super.initState();
     //Email del usuario actual desde Firebase
-    User? user = FirebaseAuth.instance.currentUser;
+    /*User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       fetchUsuario(user.email!).then((usuarioData) {
         setState(() {
           usuario = usuarioData;
-          userEmail = user.email;
+          //userEmail = user.email;
         });
       });
-    }
+    }*/
+    
+    userEmail = session['userEmail'];
 
     //Lista de Vehiculos del usuario
     obtenerVehiculos(userEmail!).then((listaVehiculos) {
@@ -150,7 +154,7 @@ class _VehiculosScreenState extends State<VehiculosScreen> {
                   });
                 });
               }, 
-              child: const Text("Aceptar")
+              child: const Text("Acetar")
             ),
             ElevatedButton(
               onPressed: () {
@@ -216,7 +220,7 @@ class _VehiculosScreenState extends State<VehiculosScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FormVehiculoScreen(vehiculo: Vehiculo.vacio(usuario_id: usuario!.id!)), 
+                        builder: (context) => FormVehiculoScreen(vehiculo: Vehiculo.vacio(usuario_id: int.parse(session['userId']!))), 
                       ),
                     ).then((_) => setState(() {
                       obtenerVehiculos(userEmail!).then((listaVehiculos) {

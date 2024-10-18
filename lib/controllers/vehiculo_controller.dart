@@ -21,6 +21,7 @@ Future<List<Vehiculo>> obtenerVehiculos(String emailUsuario) async {
   }
   return vehiculos;
 }
+
 Future<bool> registrarVehiculo(Vehiculo vehiculo) async {
   final url = Uri.parse('https://mecamovil.nexxosrl.site/api/registrar_vehiculo.php');
 
