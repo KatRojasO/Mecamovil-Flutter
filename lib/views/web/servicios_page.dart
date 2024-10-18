@@ -53,7 +53,8 @@ class _ServiciosPageState extends State<ServiciosPage> {
       }).toList();
     });
   }
-void _mostrarDialogoAgregarServicio() {
+
+  void _mostrarDialogoAgregarServicio() {
     final TextEditingController servicioController = TextEditingController();
     final TextEditingController descripcionController = TextEditingController();
 
@@ -66,29 +67,29 @@ void _mostrarDialogoAgregarServicio() {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-              width: 500, // Ajusta el ancho del input
-              height: 60,  // Ajusta la altura del input
-              child: TextField(
-                controller: servicioController,
-                decoration: InputDecoration(
-                  labelText: 'Servicio',
-                  border: OutlineInputBorder(),
+                width: 500, // Ajusta el ancho del input
+                height: 60, // Ajusta la altura del input
+                child: TextField(
+                  controller: servicioController,
+                  decoration: InputDecoration(
+                    labelText: 'Servicio',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            SizedBox(
-              width: 500, // Ajusta el ancho del input
-              height:60,  // Ajusta la altura del input
-              child: TextField(
-                controller: descripcionController,
-                decoration: InputDecoration(
-                  labelText: 'Descripción',
-                  border: OutlineInputBorder(),
+              SizedBox(height: 10),
+              SizedBox(
+                width: 500, // Ajusta el ancho del input
+                height: 60, // Ajusta la altura del input
+                child: TextField(
+                  controller: descripcionController,
+                  decoration: InputDecoration(
+                    labelText: 'Descripción',
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 5, // Permitir varias líneas para la descripción
                 ),
-                maxLines: 5, // Permitir varias líneas para la descripción
               ),
-            ),
             ],
           ),
           actions: [
@@ -125,8 +126,10 @@ void _mostrarDialogoAgregarServicio() {
   }
 
   // Función para agregar el nuevo servicio a la base de datos
-  Future<bool> _agregarNuevoServicio(String servicio, String descripcion) async {
-    final url = Uri.parse('https://mecamovil.nexxosrl.site/api/agregar_servicio.php');
+  Future<bool> _agregarNuevoServicio(
+      String servicio, String descripcion) async {
+    final url =
+        Uri.parse('https://mecamovil.nexxosrl.site/api/agregar_servicio.php');
 
     try {
       final response = await http.post(
@@ -148,6 +151,7 @@ void _mostrarDialogoAgregarServicio() {
       return false;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,41 +165,43 @@ void _mostrarDialogoAgregarServicio() {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 50),
-            // Botón verde para agregar un servicio
+        
             Row(
-              mainAxisAlignment: MainAxisAlignment.end, // Alineado a la derecha
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, 
               children: [
+             
+                Expanded(
+                  child: SizedBox(
+                    width: 400, 
+                    child: TextField(
+                      controller: _buscadorController,
+                      decoration: InputDecoration(
+                        labelText: 'Buscar',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                      onChanged: _buscarServicios,
+                    ),
+                  ),
+                ),
+
+                SizedBox(width: 800), // Espacio entre el buscador y el botón
+
+             
                 ElevatedButton.icon(
-                  onPressed: 
-                    _mostrarDialogoAgregarServicio,
-                  
+                  onPressed: _mostrarDialogoAgregarServicio,
                   icon: Icon(Icons.add, color: Colors.white), // Ícono de "+"
                   label: Text('Agregar'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green, // Color verde del botón
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                     textStyle: TextStyle(fontSize: 18),
-                    foregroundColor: Colors.white,
+                    foregroundColor: Colors.white, // Color del texto
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-
-            // Barra de búsqueda
-            SizedBox(
-              width: 400,
-              child: TextField(
-                controller: _buscadorController,
-                decoration: InputDecoration(
-                  labelText: 'Buscar',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search),
-                ),
-                onChanged: _buscarServicios,
-              ),
-            ),
-            SizedBox(height: 16),
 
             isLoading
                 ? Center(child: CircularProgressIndicator())
@@ -315,22 +321,21 @@ class ServicioDataSource extends DataTableSource {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-  icon: Icon(Icons.edit, color: Colors.green),
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditarServicioPage(
-          servicio: servicio, // Pasamos el servicio actual
-          onServicioEditado: () {
-            onActualizarEstado(); // Refresca la lista después de editar
-          },
-        ),
-      ),
-    );
-  },
-),
-
+              icon: Icon(Icons.edit, color: Colors.green),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditarServicioPage(
+                      servicio: servicio, // Pasamos el servicio actual
+                      onServicioEditado: () {
+                        onActualizarEstado(); // Refresca la lista después de editar
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
             IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
               onPressed: () async {
@@ -357,6 +362,7 @@ class ServicioDataSource extends DataTableSource {
   @override
   int get selectedRowCount => 0;
 }
+
 class EditarServicioPage extends StatefulWidget {
   final Map<String, dynamic> servicio;
   final VoidCallback onServicioEditado;
@@ -374,13 +380,16 @@ class _EditarServicioPageState extends State<EditarServicioPage> {
   @override
   void initState() {
     super.initState();
-    _servicioController = TextEditingController(text: widget.servicio['servicio']);
-    _descripcionController = TextEditingController(text: widget.servicio['descripcion']);
+    _servicioController =
+        TextEditingController(text: widget.servicio['servicio']);
+    _descripcionController =
+        TextEditingController(text: widget.servicio['descripcion']);
   }
 
   Future<void> _guardarCambios() async {
-    final url = Uri.parse('https://mecamovil.nexxosrl.site/api/editar_servicio.php');
-    
+    final url =
+        Uri.parse('https://mecamovil.nexxosrl.site/api/editar_servicio.php');
+
     final response = await http.post(
       url,
       body: {

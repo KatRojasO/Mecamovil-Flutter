@@ -22,7 +22,7 @@ class _ClientesPageState extends State<ClientesPage> {
 
   Future<void> obtenerUsuarios() async {
     final url =
-        Uri.parse('https://mecamovil.nexxosrl.site/api/obtener_usuarios.php');
+        Uri.parse('https://mecamovil.nexxosrl.site/api/obtener_clientes.php');
 
     try {
       final response = await http.get(url);
@@ -268,12 +268,7 @@ class UsuarioDataSource extends DataTableSource {
                 // Implementar la acción de editar
               },
             ),
-            IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                // Implementar la acción de eliminar
-              },
-            ),
+           
           ],
         ),
       ),

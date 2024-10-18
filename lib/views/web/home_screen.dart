@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'clientes_page.dart';
 import 'servicios_page.dart';
+import 'mecanicos_page.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -95,14 +96,6 @@ class HomePage extends StatelessWidget {
 
 
 
-class MecanicosPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Página de Mecánicos'),
-    );
-  }
-}
 /*
 class ServiciosPage extends StatelessWidget {
   @override
